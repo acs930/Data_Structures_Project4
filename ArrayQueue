@@ -1,0 +1,112 @@
+
+public class ArrayQueue <T> implements Queue <T>
+{
+
+  private T theQueue[];
+	private int front, rear;
+	private int capacity;
+	
+	
+	public ArrayQueue()
+	{
+		this(100);
+	}
+	
+	public ArrayQueue(int maxSize)
+	{
+		front = rear = 0;
+		capacity = maxSize;
+		theQueue = (T[]) new Object[capacity];
+		
+	}
+	
+	public int getCapacity()
+	{
+		return capacity;
+	}
+
+	public int size() 
+	{
+		
+		int s = (capacity - front + rear)% capacity; // whatever elements are still available
+		return s;
+	}
+
+	
+	public boolean isEmpty() 
+	{
+		
+		if(front == rear)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isFull()
+	{
+		if(size() == capacity - 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	
+	public T front() {
+		
+		return theQueue[front];
+	}
+
+	
+	public void enqueue(T element) {
+		
+		theQueue[rear] = element;
+		rear = (rear+1) % capacity;
+		
+	}
+
+	
+	public T dequeue() {
+		T element = theQueue[front];
+		front = (front+1) % capacity;
+		
+		return element;
+	}
+	
+	public String toString()
+	{
+		String theString = "|";
+		int i = front;
+		
+		while ( i != rear)
+		{
+			theString += " ";
+			theString += theQueue[i];
+			i = (i+1)%capacity;
+		}
+		
+		theString += " |";
+		return theString;
+		
+	}
+	
+	public static void main(String args[]) 
+	{
+		ArrayQueue<String> myQueue = new ArrayQueue<String>(10);
+		System.out.println(myQueue.getCapacity());
+		System.out.println(myQueue.size());
+		
+		myQueue.enqueue("The goose");
+		myQueue.enqueue("And the Spruce");
+		
+		System.out.println(myQueue.toString());
+		myQueue.dequeue();
+		System.out.println(myQueue.toString());
+		
+	}
+
+}
